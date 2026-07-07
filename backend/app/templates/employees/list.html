@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Реестр сотрудников
+{% endblock %}
+
+{% block content %}
+
+{% include "components/search.html" %}
+
+{% include "components/employee_table.html" %}
+
+{% include "components/pagination.html" %}
+
+{% include "components/delete_modal.html" %}
+
+{% endblock %}

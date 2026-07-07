@@ -1,0 +1,228 @@
+{# templates/components/employee_table.html #}
+
+<div class="overflow-hidden rounded-xl bg-white shadow-md">
+
+    <div class="overflow-x-auto">
+
+        <table class="min-w-full divide-y divide-slate-200">
+
+            <thead class="bg-slate-50">
+
+            <tr>
+
+                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Фото
+                </th>
+
+                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    ФИО
+                </th>
+
+                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Возраст
+                </th>
+
+                <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Телефон
+                </th>
+
+                <th class="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Пол
+                </th>
+
+                <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Действия
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody class="divide-y divide-slate-100 bg-white">
+
+            {% if employees %}
+
+                {% for employee in employees %}
+
+                    <tr class="transition hover:bg-slate-50">
+
+                        <td class="px-6 py-4">
+
+                            {% if employee.photo %}
+
+                                <img
+                                        src="/api/photo/{{ employee.photo.id }}/file/"
+                                        alt="{{ employee.last_name }}"
+                                        class="employee-photo-preview h-14 w-14 rounded-full object-cover border border-slate-200 cursor-pointer"
+                                >
+
+                            {% else %}
+
+                                <div
+                                        class="flex h-14 w-14 items-center justify-center rounded-full bg-slate-200 text-sm font-semibold text-slate-500"
+                                >
+                                    —
+                                </div>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <div class="font-semibold text-slate-900">
+
+                                {{ employee.last_name }}
+
+                                {{ employee.first_name }}
+
+                                {{ employee.surname or "" }}
+
+                            </div>
+
+                            <div class="mt-1 text-sm text-slate-500">
+
+                                ID {{ employee.id }}
+
+                            </div>
+
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            {{ employee.age }}
+
+                        </td>
+
+
+
+                        <td class="px-6 py-4 whitespace-nowrap text-slate-700">
+
+                            {{ employee.phone_number }}
+
+                        </td>
+
+                        <td class="px-6 py-4 text-center">
+
+                                <span
+                                        class="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700"
+                                >
+                                    {{ employee.sex }}
+                                </span>
+                        </td>
+
+                        <td class="px-6 py-4">
+
+                            <div class="flex justify-end gap-2">
+
+                                <a
+                                        href="/employees/{{ employee.id }}/edit/"
+                                        class="inline-flex items-center rounded-lg bg-amber-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-amber-600"
+                                >
+
+                                    <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="mr-1 h-4 w-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                    >
+                                        <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.586-9.414a2 2 0 112.828 2.828L12 15l-4 1 1-4 9.414-9.414z"
+                                        />
+                                    </svg>
+
+                                    Изменить
+
+                                </a>
+
+                                <button
+                                        type="button"
+                                        data-delete-btn
+                                        data-employee-id="{{ employee.id }}"
+                                        class="inline-flex items-center rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+                                >
+
+                                    <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="mr-1 h-4 w-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                    >
+                                        <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M19 7L5 7M10 11v6M14 11v6M6 7l1 13a2 2 0 002 2h6a2 2 0 002-2l1-13M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"
+                                        />
+                                    </svg>
+
+                                    Удалить
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td
+                            colspan="6"
+                            class="px-6 py-12 text-center text-slate-500"
+                    >
+
+                        <div class="flex flex-col items-center gap-2">
+
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-12 w-12 text-slate-300"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        d="M9 17v-2a4 4 0 014-4h6m-6 8h6m-9 0H5a2 2 0 01-2-2V7a2 2 0 012-2h5"
+                                />
+                            </svg>
+
+                            <div class="text-lg font-semibold">
+
+                                Сотрудники не найдены
+
+                            </div>
+
+                            <div class="text-sm">
+
+                                Попробуйте изменить параметры поиска.
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

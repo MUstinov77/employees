@@ -1,0 +1,88 @@
+{# templates/components/delete_modal.html #}
+
+<div
+        id="deleteModal"
+        class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm"
+>
+
+    <div class="flex min-h-screen items-center justify-center p-4">
+
+        <div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+
+            <div class="border-b px-6 py-4">
+
+                <h2 class="text-xl font-semibold text-slate-800">
+                    Удаление сотрудника
+                </h2>
+
+            </div>
+
+            <div class="px-6 py-6">
+
+                <div class="mb-5 flex justify-center">
+
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-red-600"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 9v2m0 4h.01M10.29 3.86l-7.1 12.29A2 2 0 004.91 19h14.18a2 2 0 001.72-2.85L13.71 3.86a2 2 0 00-3.42 0z"
+                            />
+                        </svg>
+
+                    </div>
+
+                </div>
+
+                <p class="text-center text-slate-700">
+
+                    Вы действительно хотите удалить сотрудника?
+
+                </p>
+
+                <p class="mt-2 text-center text-sm text-slate-500">
+
+                    Это действие нельзя отменить.
+
+                </p>
+
+            </div>
+
+            <div class="flex justify-end gap-3 border-t bg-slate-50 px-6 py-4">
+
+                <button
+                        id="cancelDelete"
+                        type="button"
+                        class="rounded-lg border border-slate-300 px-5 py-2 font-medium text-slate-700 hover:bg-slate-100"
+                >
+                    Отмена
+                </button>
+
+                <form
+                        id="deleteForm"
+                >
+
+                    <button
+                            type="submit"
+                            class="rounded-lg bg-red-600 px-5 py-2 font-medium text-white hover:bg-red-700"
+                    >
+                        Удалить
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

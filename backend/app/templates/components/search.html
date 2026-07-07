@@ -1,0 +1,167 @@
+{# templates/components/search.html #}
+
+<div class="mb-6 rounded-xl bg-white p-6 shadow-md">
+
+    <form
+            method="GET"
+            action="/api/employee"
+            class="space-y-6"
+    >
+
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+            <div class="lg:col-span-2">
+
+                <label
+                        for="search"
+                        class="mb-2 block text-sm font-medium text-slate-700"
+                >
+                    Поиск
+                </label>
+
+                <input
+                        id="search"
+                        name="string"
+                        type="text"
+                        value="{{ request.query_params.get('string', '') }}"
+                        placeholder="Поиск по ФИО или телефону"
+                        class="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                >
+
+            </div>
+
+            <div class="flex items-end">
+
+                <a
+                        href="/employees/create"
+                        class="flex w-full items-center justify-center rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
+                >
+
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="mr-2 h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 4v16m8-8H4"
+                        />
+                    </svg>
+                    Добавить сотрудника
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-4">
+
+            <div>
+
+                <label
+                        for="age_from"
+                        class="mb-2 block text-sm font-medium text-slate-700"
+                >
+                    Возраст от
+                </label>
+
+                <input
+                        id="age_from"
+                        name="age_from"
+                        type="number"
+                        min="0"
+                        max="120"
+                        value="{{ request.query_params.get('age_from', '') }}"
+                        class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                >
+
+            </div>
+
+            <div>
+
+                <label
+                        for="age_to"
+                        class="mb-2 block text-sm font-medium text-slate-700"
+                >
+                    Возраст до
+                </label>
+
+                <input
+                        id="age_to"
+                        name="age_to"
+                        type="number"
+                        min="0"
+                        max="120"
+                        value="{{ request.query_params.get('age_to', '') }}"
+                        class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                >
+
+            </div>
+
+            <div>
+
+                <label
+                        for="gender"
+                        class="mb-2 block text-sm font-medium text-slate-700"
+                >
+                    Пол
+                </label>
+
+                <select
+                        id="gender"
+                        name="sex"
+                        class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                >
+
+                    <option value="">Все</option>
+
+                    <option
+                            value="Муж."
+                            {% if request.query_params.get('sex') == "Муж." %}
+                                selected
+                            {% endif %}
+                    >
+                        Мужской
+                    </option>
+
+                    <option
+                            value="Жен."
+                            {% if request.query_params.get('sex') == "Жен." %}
+                                selected
+                            {% endif %}
+                    >
+                        Женский
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="flex items-end gap-3">
+
+                <button
+                        type="submit"
+                        class="flex-1 rounded-lg bg-slate-800 px-4 py-3 font-medium text-white transition hover:bg-slate-900"
+                >
+                    Поиск
+                </button>
+
+                <a
+                        href=""
+                        class="rounded-lg border border-slate-300 px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100"
+                >
+                    Сбросить
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

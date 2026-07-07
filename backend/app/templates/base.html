@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            Реестр сотрудников
+        {% endblock %}
+    </title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        .employee-photo-preview {
+            transition: transform .2s ease;
+        }
+
+        .employee-photo-preview:hover {
+            transform: scale(3);
+            z-index: 50;
+        }
+
+        .table-shadow {
+            box-shadow:
+                    0 1px 3px rgba(0,0,0,.1),
+                    0 1px 2px rgba(0,0,0,.06);
+        }
+
+        .card-shadow {
+            box-shadow:
+                    0 4px 6px rgba(0,0,0,.1),
+                    0 2px 4px rgba(0,0,0,.06);
+        }
+    </style>
+
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+<header class="bg-white border-b shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+        <h1 class="text-2xl font-bold text-slate-800">
+            Реестр сотрудников
+        </h1>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-8">
+
+    {% if request.query_params.get('success') %}
+        <div
+                class="mb-6 rounded-lg border border-green-300 bg-green-50 px-4 py-3 text-green-700"
+        >
+            Операция успешно выполнена
+        </div>
+    {% endif %}
+
+    {% if request.query_params.get('error') %}
+        <div
+                class="mb-6 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700"
+        >
+            Произошла ошибка
+        </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const deleteButtons =
+            document.querySelectorAll("[data-delete-btn]");
+
+        deleteButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                const employeeId =
+                    btn.dataset.employeeId;
+
+                const modal =
+                    document.getElementById("deleteModal");
+
+                const form =
+                    document.getElementById("deleteForm");
+
+                if (!modal || !form) {
+                    return;
+                }
+
+                const response = fetch(`/api/employee/${employeeId}`, {
+                    method: "DELETE"
+                }).then()
+                 if (response.ok) {
+                     window.location.reload()
+                 }
+
+                modal.classList.remove("hidden");
+            });
+        });
+
+        const cancelDelete =
+            document.getElementById("cancelDelete");
+
+        if (cancelDelete) {
+            cancelDelete.addEventListener("click", () => {
+
+                document
+                    .getElementById("deleteModal")
+                    ?.classList.add("hidden");
+            });
+        }
+
+        const birthDate =
+            document.getElementById("birth_date");
+
+        if (birthDate) {
+            flatpickr("#birth_date", {
+                dateFormat: "Y-m-d",
+                maxDate: "today",
+                locale: "ru"
+            });
+        }
+
+        const uploadInput =
+            document.getElementById("photo");
+
+        if (uploadInput) {
+
+            uploadInput.addEventListener("change", e => {
+
+                const file =
+                    e.target.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                const preview =
+                    document.getElementById("photo-preview");
+
+                if (!preview) {
+                    return;
+                }
+
+                const reader =
+                    new FileReader();
+
+                reader.onload = event => {
+                    preview.src = event.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+</script>
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>

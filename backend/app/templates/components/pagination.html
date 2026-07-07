@@ -1,0 +1,91 @@
+{# templates/components/pagination.html #}
+
+{% if pages > 1 %}
+
+<div class="mt-8 flex flex-col items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-md md:flex-row">
+
+    <div class="text-sm text-slate-600">
+        Всего сотрудников:
+        <span class="font-semibold">{{ total }}</span>
+
+        ·
+
+        Страница
+
+        <span class="font-semibold">
+            {{ page }}
+        </span>
+
+        из
+
+        <span class="font-semibold">
+            {{ pages }}
+        </span>
+    </div>
+
+    <nav class="flex items-center gap-2">
+
+        {% if page > 1 %}
+
+        <a
+            href="?page={{ page-1 }}
+            {% if request.query_params.get('search') %}&search={{ request.query_params.get('search') }}{% endif %}
+            {% if request.query_params.get('gender') %}&gender={{ request.query_params.get('gender') }}{% endif %}
+            {% if request.query_params.get('age_from') %}&age_from={{ request.query_params.get('age_from') }}{% endif %}
+            {% if request.query_params.get('age_to') %}&age_to={{ request.query_params.get('age_to') }}{% endif %}"
+            class="rounded-lg border border-slate-300 px-4 py-2 transition hover:bg-slate-100"
+        >
+            ← Назад
+        </a>
+
+        {% endif %}
+
+
+        {% for p in range(1, pages + 1) %}
+
+            {% if p == page %}
+
+                <span
+                    class="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white"
+                >
+                    {{ p }}
+                </span>
+
+            {% elif p >= page-2 and p <= page+2 %}
+
+                <a
+                    href="?page={{ p }}
+                    {% if request.query_params.get('search') %}&search={{ request.query_params.get('search') }}{% endif %}
+                    {% if request.query_params.get('gender') %}&gender={{ request.query_params.get('gender') }}{% endif %}
+                    {% if request.query_params.get('age_from') %}&age_from={{ request.query_params.get('age_from') }}{% endif %}
+                    {% if request.query_params.get('age_to') %}&age_to={{ request.query_params.get('age_to') }}{% endif %}"
+                    class="rounded-lg border border-slate-300 px-4 py-2 transition hover:bg-slate-100"
+                >
+                    {{ p }}
+                </a>
+
+            {% endif %}
+
+        {% endfor %}
+
+
+        {% if page < pages %}
+
+        <a
+            href="?page={{ page+1 }}
+            {% if request.query_params.get('search') %}&search={{ request.query_params.get('search') }}{% endif %}
+            {% if request.query_params.get('gender') %}&gender={{ request.query_params.get('gender') }}{% endif %}
+            {% if request.query_params.get('age_from') %}&age_from={{ request.query_params.get('age_from') }}{% endif %}
+            {% if request.query_params.get('age_to') %}&age_to={{ request.query_params.get('age_to') }}{% endif %}"
+            class="rounded-lg border border-slate-300 px-4 py-2 transition hover:bg-slate-100"
+        >
+            Вперед →
+        </a>
+
+        {% endif %}
+
+    </nav>
+
+</div>
+
+{% endif %}
