@@ -27,10 +27,10 @@ class EmployeeCreateSchema(BaseModel):
             cls,
             first_name: Annotated[str, Form(...)],
             lastname: Annotated[str, Form(...)],
-            surname: Annotated[str | None, Form(...)],
             date_of_birth: Annotated[date, Form(...)],
-            phone_number: Annotated[str | None, Form(...)],
-            sex: Annotated[EmployeeSex, Form(...)]
+            sex: Annotated[EmployeeSex, Form(...)],
+            phone_number: Annotated[str | None, Form(...)] = None,
+            surname: Annotated[str | None, Form(...)] = None,
     ):
         return cls(
             first_name=first_name,
