@@ -6,7 +6,7 @@ from backend.app.service.employee import EmployeeService, get_employee_service
 
 from fastapi import Request, Depends
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="backend/app/templates")
 
 app = create_app()
 
